@@ -15,8 +15,6 @@ function RenderCard({ item }) {
 }
 
 export default function Home(props) {
-  console.log("Dish", props.dish);
-
   return (
     <div className="container">
       <div className="row align-items-start">
