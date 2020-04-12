@@ -9,6 +9,7 @@ import Footer from "./Footer";
 import { Switch, Route, Redirect } from "react-router-dom";
 import Home from "./Home";
 import Contact from "./Contact";
+import About from "./About";
 import DishDetail from "../components/DishDetail";
 
 function Main() {
@@ -44,6 +45,7 @@ function Main() {
         <Route exact path="/menu" component={() => <Menu dishes={dishes} />} />
         <Route path="/menu/:dishId" component={DishWithId} />
         <Route exact path="/contact" component={Contact} />
+        <Route exact path="/about" component={() => <About leaders={leaders} />} />
         <Redirect to="/home" />
       </Switch>
       <Footer />
