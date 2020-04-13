@@ -41,11 +41,11 @@ export default function CommentForm() {
             </Row>
             <Row className="form-group">
               <Col>
-                <Label htmlFor="username">Your Name</Label>
+                <Label htmlFor="author">Your Name</Label>
                 <Control.text
-                  model=".username"
-                  id="username"
-                  name="username"
+                  model=".author"
+                  id="author"
+                  name="author"
                   placeholder="Your Name"
                   className="form-control"
                   validators={{
@@ -56,7 +56,7 @@ export default function CommentForm() {
                 />
                 <Errors
                   className="text-danger"
-                  model=".username"
+                  model=".author"
                   show="touched"
                   messages={{
                     required: "Required",
