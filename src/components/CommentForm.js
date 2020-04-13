@@ -7,14 +7,14 @@ const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !val || val.length <= len;
 const minLength = (len) => (val) => val && val.length >= len;
 
-export default function CommentForm() {
+export default function CommentForm({ addComment, dishId }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const toggleModal = () => setIsModalOpen(!isModalOpen);
 
   const handleSubmit = (values) => {
     toggleModal();
-    alert(JSON.stringify(values));
+    addComment(dishId, values.rating, values.author, values.comment);
   };
 
   return (

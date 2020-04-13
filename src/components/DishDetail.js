@@ -15,11 +15,11 @@ function RenderDish({ dish }) {
   );
 }
 
-function RenderComments({ comments }) {
+function RenderComments({ comments, addComment, dishId }) {
   if (comments.length < 1) {
     return (
       <div>
-        <CommentForm></CommentForm>
+        <CommentForm addComment={addComment} dishId={dishId}></CommentForm>
       </div>
     );
   } else {
@@ -36,7 +36,7 @@ function RenderComments({ comments }) {
             </li>
           ))}
         </ul>
-        <CommentForm></CommentForm>
+        <CommentForm addComment={addComment} dishId={dishId}></CommentForm>
       </div>
     );
   }
@@ -62,7 +62,7 @@ export default function DishDetail(props) {
           <RenderDish dish={props.dish} />
         </div>
         <div className="col-12 col-md-5 m-1">
-          <RenderComments comments={props.comments} />
+          <RenderComments comments={props.comments} addComment={props.addComment} dishId={props.dish.id} />
         </div>
       </div>
     </div>
