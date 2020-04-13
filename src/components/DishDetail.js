@@ -1,6 +1,7 @@
 import React from "react";
 import { Card, CardImg, CardText, CardBody, CardTitle, Breadcrumb, BreadcrumbItem } from "reactstrap";
 import { Link } from "react-router-dom";
+import CommentForm from "./CommentForm";
 
 function RenderDish({ dish }) {
   return (
@@ -16,7 +17,11 @@ function RenderDish({ dish }) {
 
 function RenderComments({ comments }) {
   if (comments.length < 1) {
-    return <div></div>;
+    return (
+      <div>
+        <CommentForm></CommentForm>
+      </div>
+    );
   } else {
     return (
       <div>
@@ -31,6 +36,7 @@ function RenderComments({ comments }) {
             </li>
           ))}
         </ul>
+        <CommentForm></CommentForm>
       </div>
     );
   }
