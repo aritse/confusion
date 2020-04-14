@@ -4,16 +4,19 @@ import { Link } from "react-router-dom";
 import CommentForm from "./CommentForm";
 import Loading from "./Loading";
 import { baseUrl } from "../baseUrl";
+import { FadeTransform, Fade, Stagger } from "react-animation-components";
 
 function RenderDish({ dish }) {
   return (
-    <Card>
-      <CardImg width="100%" src={baseUrl + dish.image} alt={dish.name} />
-      <CardBody>
-        <CardTitle>{dish.name}</CardTitle>
-        <CardText>{dish.description}</CardText>
-      </CardBody>
-    </Card>
+    <FadeTransform in transformProps={{ exitTransform: "scale(0.5) translateY(-50%)" }}>
+      <Card>
+        <CardImg width="100%" src={baseUrl + dish.image} alt={dish.name} />
+        <CardBody>
+          <CardTitle>{dish.name}</CardTitle>
+          <CardText>{dish.description}</CardText>
+        </CardBody>
+      </Card>
+    </FadeTransform>
   );
 }
 
@@ -29,14 +32,18 @@ function RenderComments({ comments, postComment, dishId }) {
       <div>
         <h4>Comments</h4>
         <ul className="list-unstyled">
-          {comments.map((comment) => (
-            <li key={comment.id}>
-              <p>{comment.comment}</p>
-              <p>
-                --{comment.author}, {comment.date.split("T")[0]}
-              </p>
-            </li>
-          ))}
+          <Stagger in>
+            {comments.map((comment) => (
+              <Fade in>
+                <li key={comment.id}>
+                  <p>{comment.comment}</p>
+                  <p>
+                    --{comment.author}, {comment.date.split("T")[0]}
+                  </p>
+                </li>
+              </Fade>
+            ))}
+          </Stagger>
         </ul>
         <CommentForm postComment={postComment} dishId={dishId}></CommentForm>
       </div>
