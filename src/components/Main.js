@@ -8,52 +8,61 @@ import Contact from "./Contact";
 import About from "./About";
 import DishDetail from "../components/DishDetail";
 import { connect } from "react-redux";
-import { addComment, fetchDishes } from "../redux/ActionCreators";
+import { addComment, fetchDishes, fetchComments, fetchPromotions, fetchLeaders } from "../redux/ActionCreators";
 import { actions } from "react-redux-form";
 
-const mapStateToProps = (state) => {
-  return {
-    dishes: state.dishes,
-    comments: state.comments,
-    promotions: state.promotions,
-    leaders: state.leaders,
-  };
-};
+const mapStateToProps = (state) => ({
+  dishes: state.dishes,
+  comments: state.comments,
+  promotions: state.promotions,
+  leaders: state.leaders,
+});
 
 const mapDispatchToProps = (dispatch) => ({
+  fetchDishes: () => dispatch(fetchDishes()),
+  fetchComments: () => dispatch(fetchComments()),
+  fetchPromotions: () => dispatch(fetchPromotions()),
+  fetchLeaders: () => dispatch(fetchLeaders()),
+  resetFeedbackForm: () => dispatch(actions.reset("feedback")),
   addComment: (dishId, rating, author, comment) => dispatch(addComment(dishId, rating, author, comment)),
-  fetchDishes: () => {
-    dispatch(fetchDishes());
-  },
-  resetFeedbackForm: () => {
-    dispatch(actions.reset("feedback"));
-  },
 });
 
 function Main(props) {
   const HomePage = () => {
     return (
       <Home
+        // dish
         dish={props.dishes.dishes.filter((dish) => dish.featured)[0]}
         dishesLoading={props.dishes.isLoading}
         dishesErrMess={props.dishes.errMess}
-        promotion={props.promotions.filter((promotion) => promotion.featured)[0]}
-        leader={props.leaders.filter((leader) => leader.featured)[0]}
+        // promotion
+        promotion={props.promotions.promotions.filter((promotion) => promotion.featured)[0]}
+        promotionsLoading={props.promotions.isLoading}
+        promotionsErrMess={props.promotions.errMess}
+        // leader
+        leader={props.leaders.leaders.filter((leader) => leader.featured)[0]}
+        leadersLoading={props.leaders.isLoading}
+        leadersErrMess={props.leaders.errMess}
       />
     );
   };
 
   useEffect(() => {
     props.fetchDishes();
+    props.fetchComments();
+    props.fetchPromotions();
+    props.fetchLeaders();
   }, []);
 
   const DishWithId = ({ match }) => {
+    const dishId = parseInt(match.params.dishId);
     return (
       <DishDetail
-        dish={props.dishes.dishes.filter((dish) => dish.id === parseInt(match.params.dishId, 10))[0]}
+        dish={props.dishes.dishes.filter((dish) => dish.id === dishId)[0]}
         isLoading={props.dishes.isLoading}
         errMess={props.dishes.errMess}
-        comments={props.comments.filter((comment) => comment.dishId === parseInt(match.params.dishId, 10))}
+        comments={props.comments.comments.filter((comment) => comment.dishId === dishId)}
+        commentsErrMess={props.comments.errMess}
         addComment={props.addComment}
       />
     );
