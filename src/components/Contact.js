@@ -11,7 +11,7 @@ const validEmail = (val) => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val
 
 export default function Contact(props) {
   const handleSubmit = (values) => {
-    alert(JSON.stringify(values));
+    props.postFeedback(values);
     props.resetFeedbackForm();
   };
 

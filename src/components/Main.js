@@ -8,7 +8,7 @@ import Contact from "./Contact";
 import About from "./About";
 import DishDetail from "../components/DishDetail";
 import { connect } from "react-redux";
-import { postComment, fetchDishes, fetchComments, fetchPromotions, fetchLeaders } from "../redux/ActionCreators";
+import { postFeedback, postComment, fetchDishes, fetchComments, fetchPromotions, fetchLeaders } from "../redux/ActionCreators";
 import { actions } from "react-redux-form";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 
@@ -78,7 +78,7 @@ function Main(props) {
             <Route path="/home" component={HomePage} />
             <Route exact path="/menu" component={() => <Menu dishes={props.dishes} />} />
             <Route path="/menu/:dishId" component={DishWithId} />
-            <Route exact path="/contact" component={() => <Contact resetFeedbackForm={props.resetFeedbackForm} />} />
+            <Route exact path="/contact" component={() => <Contact postFeedback={postFeedback} resetFeedbackForm={props.resetFeedbackForm} />} />
             <Route exact path="/about" component={() => <About leaders={props.leaders} />} />
             <Redirect to="/home" />
           </Switch>

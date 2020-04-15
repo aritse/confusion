@@ -1,7 +1,7 @@
 import * as ActionTypes from "./ActionTypes";
 import { baseUrl } from "../baseUrl";
 
-// comment creators
+// post comment creator
 export const addComment = (comment) => {
   return {
     type: ActionTypes.ADD_COMMENT,
@@ -37,6 +37,37 @@ export const postComment = (dishId, rating, author, comment) => (dispatch) => {
     .catch((error) => {
       console.log(`Post comment ${error.message}`);
       alert(`Your comment could not be posted.\n${error.message}`);
+    });
+};
+
+// post feedback creator
+export const postFeedback = (feedback) => {
+  return fetch(baseUrl + "feedback", {
+    method: "post",
+    body: JSON.stringify(feedback),
+    headers: { "content-type": "application/json" },
+    credentials: "same-origin",
+  })
+    .then(
+      (response) => {
+        if (response.ok) {
+          return response;
+        } else {
+          const error = new Error(`Error ${response.status}: ${response.statusText}`);
+          error.response = response;
+          throw error;
+        }
+      },
+      (error) => {
+        const errMess = new Error(error.message);
+        throw errMess;
+      }
+    )
+    .then((response) => response.json())
+    .then((newFeedback) => alert(JSON.stringify(newFeedback)))
+    .catch((error) => {
+      console.log(`Post feedback ${error.message}`);
+      alert(`Your feedback could not be posted.\n${error.message}`);
     });
 };
 
@@ -118,6 +149,7 @@ export const addLeaders = (leaders) => {
   };
 };
 
+// thunks
 export const fetchDishes = () => (dispatch) => {
   dispatch(dishesLoading());
   return fetch(baseUrl + "dishes")
